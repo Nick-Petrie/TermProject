@@ -10,10 +10,17 @@ namespace TermProject.Models
         }
 
         public DbSet<MovieReview> MovieReviews { get; set; }
+        public DbSet<Subscribers> Subscribers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Seed data for the MovieReview table
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Subscribers>().HasData(
+                new Subscribers { ID = 1, FirstName = "Nick", LastName = "Petrie", GenderIdentity = Gender.Male, email = "nick@example.com" },
+                new Subscribers { ID = 2, FirstName = "Jon", LastName = "Doe", GenderIdentity = Gender.Male, email = "jon@example.com" }
+            );
+
             modelBuilder.Entity<MovieReview>().HasData(
                 new MovieReview
                 {
@@ -21,7 +28,8 @@ namespace TermProject.Models
                     MovieTitle = "Inception",
                     ReviewerName = "Nick",
                     Rating = 9,
-                    ReviewText = "A brilliant, mind-bending thriller!"
+                    ReviewText = "A brilliant, mind-bending thriller!",
+                    SubscribersId = 1 
                 },
                 new MovieReview
                 {
@@ -29,7 +37,8 @@ namespace TermProject.Models
                     MovieTitle = "The Matrix",
                     ReviewerName = "Jon",
                     Rating = 10,
-                    ReviewText = "An absolute sci-fi classic!"
+                    ReviewText = "An absolute sci-fi classic!",
+                    SubscribersId = 2 
                 }
             );
         }
